@@ -4,7 +4,7 @@ module Reporter exposing
     , formatFixProposal
     )
 
-{-| Formats the result of `elm-lint` in a nice human-readable way.
+{-| Formats the result of `elm-review` in a nice human-readable way.
 
 
 # Types
@@ -29,7 +29,7 @@ import Text exposing (Text)
 
 
 {-| Contents of an error. Convert the errors from
-[`Lint`](https://package.elm-lang.org/packages/jfmengels/elm-lint/4.0.0/Lint#Error)
+[`Review`](https://package.elm-lang.org/packages/jfmengels/elm-review/1.0.0/Review#Error)
 to this type.
 -}
 type alias Error =
@@ -81,24 +81,24 @@ type alias Range =
     }
 
 
-{-| Mode in which `elm-lint` is running.
+{-| Mode in which `elm-review` is running.
 -}
 type Mode
-    = Linting
+    = Reviewing
     | Fixing
 
 
-{-| Reports the errors reported by `elm-lint` in a nice human-readable way.
+{-| Reports the errors reported by `elm-review` in a nice human-readable way.
 -}
 formatReport : Mode -> List ( File, List Error ) -> List TextContent
-formatReport lintMode errors =
+formatReport mode errors =
     let
         numberOfErrors : Int
         numberOfErrors =
             totalNumberOfErrors errors
     in
     if numberOfErrors == 0 then
-        "I found no linting errors.\nYou're all good!\n"
+        "I found no problems while reviewing!\n"
             |> Text.from
             |> Text.toRecord
             |> List.singleton
@@ -106,7 +106,7 @@ formatReport lintMode errors =
     else
         [ errors
             |> List.filter (Tuple.second >> List.isEmpty >> not)
-            |> formatReports lintMode
+            |> formatReports mode
         , [ Text.from "\n" ]
         ]
             |> List.concat
@@ -114,15 +114,15 @@ formatReport lintMode errors =
 
 
 formatReportForFileWithExtract : Mode -> ( File, List Error ) -> List Text
-formatReportForFileWithExtract lintMode ( file, errors ) =
+formatReportForFileWithExtract mode ( file, errors ) =
     let
         formattedErrors : List (List Text)
         formattedErrors =
-            List.map (formatErrorWithExtract lintMode file) errors
+            List.map (formatErrorWithExtract mode file) errors
 
         prefix : String
         prefix =
-            "-- ELM-LINT ERROR "
+            "-- ELM-REVIEW ERROR "
 
         header : Text
         header =
@@ -134,7 +134,7 @@ formatReportForFileWithExtract lintMode ( file, errors ) =
 
 
 formatErrorWithExtract : Mode -> File -> Error -> List Text
-formatErrorWithExtract lintMode file { ruleName, message, details, range, hasFix } =
+formatErrorWithExtract mode file { ruleName, message, details, range, hasFix } =
     let
         title : List Text
         title =
@@ -155,11 +155,11 @@ formatErrorWithExtract lintMode file { ruleName, message, details, range, hasFix
     [ title
     , codeExtract_
     , details_
-    , case lintMode of
-        Linting ->
+    , case mode of
+        Reviewing ->
             if hasFix then
                 [ Text.from "I think I know how to fix this problem. If you run "
-                , "elm-lint --fix" |> Text.from |> Text.inBlue
+                , "elm-review --fix" |> Text.from |> Text.inBlue
                 , Text.from ", I can\nsuggest a solution and you can validate it."
                 ]
 
@@ -302,19 +302,19 @@ totalNumberOfErrors errors =
 
 
 formatReports : Mode -> List ( File, List Error ) -> List Text
-formatReports lintMode errors =
+formatReports mode errors =
     case errors of
         [] ->
             []
 
         [ error ] ->
-            formatReportForFileWithExtract lintMode error
+            formatReportForFileWithExtract mode error
 
         firstError :: secondError :: restOfErrors ->
             List.concat
-                [ formatReportForFileWithExtract lintMode firstError
+                [ formatReportForFileWithExtract mode firstError
                 , fileSeparator firstError secondError
-                , formatReports lintMode (secondError :: restOfErrors)
+                , formatReports mode (secondError :: restOfErrors)
                 ]
 
 
@@ -345,7 +345,7 @@ fileIdentifier ( file, _ ) =
 -- FIX
 
 
-{-| Reports a fix proposal for a single error reported by `elm-lint` in a nice human-readable way.
+{-| Reports a fix proposal for a single error reported by `elm-review` in a nice human-readable way.
 -}
 formatFixProposal : File -> Error -> String -> List TextContent
 formatFixProposal file error fixedSource =
