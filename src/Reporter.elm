@@ -33,8 +33,7 @@ import Text exposing (Text)
 to this type.
 -}
 type alias Error =
-    { moduleName : Maybe String
-    , ruleName : String
+    { ruleName : String
     , message : String
     , details : List String
     , range : Range
