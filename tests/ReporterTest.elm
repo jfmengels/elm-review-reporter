@@ -49,8 +49,7 @@ singleErrorTest =
                 , source = """module FileA exposing (a)
 a = Debug.log "debug" 1"""
                 }
-              , [ { moduleName = Just "FileA"
-                  , ruleName = "NoDebug"
+              , [ { ruleName = "NoDebug"
                   , message = "Do not use Debug"
                   , details =
                         [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum cursus erat ullamcorper, commodo leo quis, sollicitudin eros. Sed semper mattis ex, vitae dignissim lectus. Integer eu risus augue. Nam egestas lacus non lacus molestie mattis. Phasellus magna dui, ultrices eu massa nec, interdum tincidunt eros. Aenean rutrum a purus nec cursus. Integer ullamcorper leo non lectus dictum, in vulputate justo vulputate. Donec ullamcorper finibus quam sed dictum."
@@ -120,8 +119,7 @@ multipleErrorsTests =
 a = Debug.log "debug" 1
 b = foo <| Debug.log "other debug" 1"""
                     }
-                  , [ { moduleName = Just "FileA"
-                      , ruleName = "NoDebug"
+                  , [ { ruleName = "NoDebug"
                       , message = "Do not use Debug"
                       , details = details
                       , range =
@@ -130,8 +128,7 @@ b = foo <| Debug.log "other debug" 1"""
                             }
                       , hasFix = False
                       }
-                    , { moduleName = Just "FileA"
-                      , ruleName = "NoDebug"
+                    , { ruleName = "NoDebug"
                       , message = "Do not use Debug"
                       , details = details
                       , range =
@@ -211,8 +208,7 @@ Donec sed ligula ac mi pretium mattis et in nisi. Nulla nec ex hendrerit, sollic
                     , source = """module FileA exposing (a)
 a = Debug.log "debug" 1"""
                     }
-                  , [ { moduleName = Just "FileA"
-                      , ruleName = "NoDebug"
+                  , [ { ruleName = "NoDebug"
                       , message = "Do not use Debug"
                       , details =
                             [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum cursus erat ullamcorper, commodo leo quis, sollicitudin eros. Sed semper mattis ex, vitae dignissim lectus. Integer eu risus augue. Nam egestas lacus non lacus molestie mattis. Phasellus magna dui, ultrices eu massa nec, interdum tincidunt eros. Aenean rutrum a purus nec cursus. Integer ullamcorper leo non lectus dictum, in vulputate justo vulputate. Donec ullamcorper finibus quam sed dictum."
@@ -230,8 +226,7 @@ a = Debug.log "debug" 1"""
                     , source = """module FileB exposing (a)
 a = Debug.log "debug" 1"""
                     }
-                  , [ { moduleName = Just "FileB"
-                      , ruleName = "NoDebug"
+                  , [ { ruleName = "NoDebug"
                       , message = "Do not use Debug"
                       , details =
                             [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum cursus erat ullamcorper, commodo leo quis, sollicitudin eros. Sed semper mattis ex, vitae dignissim lectus. Integer eu risus augue. Nam egestas lacus non lacus molestie mattis. Phasellus magna dui, ultrices eu massa nec, interdum tincidunt eros. Aenean rutrum a purus nec cursus. Integer ullamcorper leo non lectus dictum, in vulputate justo vulputate. Donec ullamcorper finibus quam sed dictum."
@@ -249,8 +244,7 @@ a = Debug.log "debug" 1"""
                     , source = """module FileC exposing (a)
 a = Debug.log "debug" 1"""
                     }
-                  , [ { moduleName = Just "FileC"
-                      , ruleName = "NoDebug"
+                  , [ { ruleName = "NoDebug"
                       , message = "Do not use Debug"
                       , details =
                             [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum cursus erat ullamcorper, commodo leo quis, sollicitudin eros. Sed semper mattis ex, vitae dignissim lectus. Integer eu risus augue. Nam egestas lacus non lacus molestie mattis. Phasellus magna dui, ultrices eu massa nec, interdum tincidunt eros. Aenean rutrum a purus nec cursus. Integer ullamcorper leo non lectus dictum, in vulputate justo vulputate. Donec ullamcorper finibus quam sed dictum."
@@ -379,8 +373,7 @@ fixAvailableTest =
                     , source = """module FileA exposing (a)
 a = Debug.log "debug" 1"""
                     }
-                  , [ { moduleName = Just "FileA"
-                      , ruleName = "NoDebug"
+                  , [ { ruleName = "NoDebug"
                       , message = "Do not use Debug"
                       , details =
                             [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum cursus erat ullamcorper, commodo leo quis, sollicitudin eros. Sed semper mattis ex, vitae dignissim lectus. Integer eu risus augue. Nam egestas lacus non lacus molestie mattis. Phasellus magna dui, ultrices eu massa nec, interdum tincidunt eros. Aenean rutrum a purus nec cursus. Integer ullamcorper leo non lectus dictum, in vulputate justo vulputate. Donec ullamcorper finibus quam sed dictum."
@@ -443,8 +436,7 @@ suggest a solution and you can validate it.
 
                     error : Error
                     error =
-                        { moduleName = Just "FileA"
-                        , ruleName = "NoDebug"
+                        { ruleName = "NoDebug"
                         , message = "Do not use Debug"
                         , details =
                             [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum cursus erat ullamcorper, commodo leo quis, sollicitudin eros. Sed semper mattis ex, vitae dignissim lectus. Integer eu risus augue. Nam egestas lacus non lacus molestie mattis. Phasellus magna dui, ultrices eu massa nec, interdum tincidunt eros. Aenean rutrum a purus nec cursus. Integer ullamcorper leo non lectus dictum, in vulputate justo vulputate. Donec ullamcorper finibus quam sed dictum."
