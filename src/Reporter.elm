@@ -317,7 +317,8 @@ formatReportsStartingWith formattedSoFar mode errors =
 
         firstError :: secondError :: restOfErrors ->
             formatReportsStartingWith
-                (formatReportForFileWithExtract mode firstError
+                (formattedSoFar
+                    ++ formatReportForFileWithExtract mode firstError
                     ++ fileSeparator firstError secondError
                 )
                 mode
