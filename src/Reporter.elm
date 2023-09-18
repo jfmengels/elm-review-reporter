@@ -303,19 +303,25 @@ totalNumberOfErrors errors =
 
 formatReports : Mode -> List ( File, List Error ) -> List Text
 formatReports mode errors =
+    formatReportsStartingWith [] mode errors
+
+
+formatReportsStartingWith : List Text -> Mode -> List ( File, List Error ) -> List Text
+formatReportsStartingWith formattedSoFar mode errors =
     case errors of
         [] ->
-            []
+            formattedSoFar
 
         [ error ] ->
-            formatReportForFileWithExtract mode error
+            formattedSoFar ++ formatReportForFileWithExtract mode error
 
         firstError :: secondError :: restOfErrors ->
-            List.concat
-                [ formatReportForFileWithExtract mode firstError
-                , fileSeparator firstError secondError
-                , formatReports mode (secondError :: restOfErrors)
-                ]
+            formatReportsStartingWith
+                (formatReportForFileWithExtract mode firstError
+                    ++ fileSeparator firstError secondError
+                )
+                mode
+                (secondError :: restOfErrors)
 
 
 fileSeparator : ( File, List Error ) -> ( File, List Error ) -> List Text
